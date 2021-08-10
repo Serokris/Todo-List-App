@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">To-Do List</string>
+    <string name="todo_description">To-do description</string>
+    <string name="field_must_not_be_empty">The field with the to-do description must not be empty!</string>
+    <string name="todo_successfully_added">The to-do has been successfully added!</string>
+    <string name="new_todo_description">New to-do description</string>
+    <string name="todo_successfully_updated">The to-do has been successfully updated!</string>
+    <string name="confirm_action">Confirm action</string>
+    <string name="delete_all_todo">Delete all to-do</string>
+    <string name="you_dont_have_todos">You don\'t have a to-do</string>
+    <string name="you_dont_have_completed_todos">You don\'t have a completed to-do\'s</string>
+    <string name="delete_all_completed">Delete all completed</string>
+    <string name="add_reminder_of_uncompleted_to_do">Add reminder of uncompleted to-do\'s</string>
+    <string name="you_dont_have_uncompleted_todos">You don\'t have a uncompleted to-do\'s</string>
+    <string name="cancel_reminder">Cancel reminder</string>
+    <string name="you_dont_have_reminder">You don\'t have a reminder set</string>
+    <string name="select_time_for_reminder">Select the time for the to-do\'s reminder</string>
+    <string name="reminder_canceled">Reminder canceled</string>
+</resources>

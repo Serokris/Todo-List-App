@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
+        android:title="Search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always|collapseActionView"/>
+
+    <item
+        android:icon="@drawable/ic_sort"
+        android:title="Sort"
+        app:showAsAction="always">
+
+        <menu>
+
+            <item
+                android:id="@+id/action_sort_by_name"
+                android:title="Sort by name" />
+
+            <item
+                android:id="@+id/action_sort_by_date_created"
+                android:title="Sort by date created" />
+
+        </menu>
+
+    </item>
+
+    <item
+        android:id="@+id/action_delete_all"
+        android:title="@string/delete_all_todo"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_delete_all_completed"
+        android:title="@string/delete_all_completed"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_add_reminder_todo"
+        android:title="@string/add_reminder_of_uncompleted_to_do"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_cancel_reminder"
+        android:title="@string/cancel_reminder"
+        app:showAsAction="never"/>
+
+</menu>

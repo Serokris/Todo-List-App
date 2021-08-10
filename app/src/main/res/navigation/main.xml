@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/todoListFragment">
+
+    <fragment
+        android:id="@+id/todoListFragment"
+        android:name="com.example.to_dolistapp.ui.todo.TodoListFragment"
+        android:label="To-Do List"
+        tools:layout="@layout/fragment_todo_list">
+        <action
+            android:id="@+id/action_todoListFragment_to_addTodoFragment"
+            app:destination="@id/addTodoFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_todoListFragment_to_updateTodoFragment"
+            app:destination="@id/updateTodoFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addTodoFragment"
+        android:name="com.example.to_dolistapp.ui.addTodo.AddTodoFragment"
+        android:label="Adding to-do"
+        tools:layout="@layout/fragment_add_todo">
+        <action
+            android:id="@+id/action_addTodoFragment_to_todoListFragment"
+            app:destination="@id/todoListFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/updateTodoFragment"
+        android:name="com.example.to_dolistapp.ui.updateTodo.UpdateTodoFragment"
+        android:label="Updating to-do"
+        tools:layout="@layout/fragment_update_todo" >
+        <action
+            android:id="@+id/action_updateTodoFragment_to_todoListFragment"
+            app:destination="@id/todoListFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="todo"
+            app:argType="com.example.to_dolistapp.data.Todo" />
+    </fragment>
+</navigation>
