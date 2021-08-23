@@ -9,8 +9,7 @@ import com.example.to_dolistapp.R
 import com.example.to_dolistapp.utils.notifications.NotificationReceiver
 import java.util.*
 
-class Alarm {
-
+class TodoAlarmManager {
     companion object {
         fun createAlarm(context: Context, calendar : Calendar) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager

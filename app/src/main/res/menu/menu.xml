@@ -31,17 +31,17 @@
 
     <item
         android:id="@+id/action_delete_all"
-        android:title="@string/delete_all_todo"
+        android:title="@string/delete_all_todos"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/action_delete_all_completed"
-        android:title="@string/delete_all_completed"
+        android:title="@string/delete_all_completed_todos"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/action_add_reminder_todo"
-        android:title="@string/add_reminder_of_uncompleted_to_do"
+        android:title="@string/add_reminder_of_uncompleted_todos"
         app:showAsAction="never"/>
 
     <item

@@ -18,7 +18,7 @@ import com.example.to_dolistapp.R
 import com.example.to_dolistapp.data.SortOrder
 import com.example.to_dolistapp.data.Todo
 import com.example.to_dolistapp.databinding.FragmentTodoListBinding
-import com.example.to_dolistapp.utils.Alarm
+import com.example.to_dolistapp.utils.TodoAlarmManager
 import com.example.to_dolistapp.utils.observeOnce
 import com.example.to_dolistapp.viewmodel.TodoViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -39,8 +39,6 @@ class TodoListFragment : Fragment(), TodoListAdapter.OnTodoClickListener {
     ): View {
         val binding: FragmentTodoListBinding = FragmentTodoListBinding.inflate(inflater)
         navController = findNavController()
-
-        binding.lifecycleOwner = this
 
         adapter = TodoListAdapter(this)
 
@@ -122,7 +120,7 @@ class TodoListFragment : Fragment(), TodoListAdapter.OnTodoClickListener {
             R.id.action_delete_all -> deleteAllTodo()
             R.id.action_delete_all_completed -> deleteAllCompletedTodo()
             R.id.action_add_reminder_todo -> addReminderOfUncompletedTodo()
-            R.id.action_cancel_reminder -> Alarm.cancelReminder(requireActivity())
+            R.id.action_cancel_reminder -> TodoAlarmManager.cancelReminder(requireActivity())
         }
         return super.onOptionsItemSelected(item)
     }
@@ -151,7 +149,7 @@ class TodoListFragment : Fragment(), TodoListAdapter.OnTodoClickListener {
                     calendar.set(Calendar.MINUTE, materialTimePicker.minute)
                     calendar.set(Calendar.HOUR_OF_DAY, materialTimePicker.hour)
 
-                    Alarm.createAlarm(requireActivity(), calendar)
+                    TodoAlarmManager.createAlarm(requireActivity(), calendar)
                     Toast.makeText(
                         context,
                         "You will get a reminder in ${DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.time)}",

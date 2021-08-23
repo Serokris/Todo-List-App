@@ -11,7 +11,6 @@ import com.example.to_dolistapp.R
 import com.example.to_dolistapp.ui.MainActivity
 
 class NotificationTodo {
-
     companion object {
         private lateinit var notificationManager: NotificationManager
         private const val CHANNEL_ID = "3550"
