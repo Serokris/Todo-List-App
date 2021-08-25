@@ -1,4 +1,4 @@
-package com.example.to_dolistapp.ui.todo
+package com.example.to_dolistapp.ui.todolist
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -24,9 +24,11 @@ import com.example.to_dolistapp.viewmodel.TodoViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.DateFormat
 import java.util.*
 
+@AndroidEntryPoint
 class TodoListFragment : Fragment(), TodoListAdapter.OnTodoClickListener {
 
     private val viewModel: TodoViewModel by viewModels()
@@ -44,12 +46,7 @@ class TodoListFragment : Fragment(), TodoListAdapter.OnTodoClickListener {
 
         viewModel.getAllTodo.observe(viewLifecycleOwner) { list ->
             adapter.submitList(list)
-
-            if (list.isEmpty()) {
-                binding.imageTodoList.visibility = View.VISIBLE
-            } else {
-                binding.imageTodoList.visibility = View.INVISIBLE
-            }
+            binding.imageTodoList.visibility = if (list.isEmpty()) View.VISIBLE else View.INVISIBLE
         }
 
         binding.apply {
@@ -166,11 +163,11 @@ class TodoListFragment : Fragment(), TodoListAdapter.OnTodoClickListener {
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.confirm_action)
             .setMessage(message)
-            .setPositiveButton("Confirm"){dialog, _ ->
+            .setPositiveButton("Confirm") { dialog, _ ->
                 positiveButtonClickListener.invoke()
                 dialog.dismiss()
             }
-            .setNegativeButton("Cancel"){dialog, _ ->
+            .setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
             }.create().show()
     }

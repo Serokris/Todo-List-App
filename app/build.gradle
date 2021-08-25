@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -66,11 +67,11 @@ dependencies {
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines"
 
-    // Dagger Hilt
+    // Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_for_viewmodel"
-    kapt "androidx.hilt:hilt-compiler:$hilt_for_viewmodel"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$view_model_hilt_version"
+    kapt "androidx.hilt:hilt-compiler:$view_model_hilt_version"
 
     // DataStore
     implementation "androidx.datastore:datastore-preferences:$data_store_version"

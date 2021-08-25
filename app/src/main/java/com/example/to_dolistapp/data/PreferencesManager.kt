@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
+import javax.inject.Singleton
 
 private const val TAG = "PreferencesManager"
 
@@ -18,7 +19,8 @@ enum class SortOrder { BY_NAME, BY_DATE }
 
 data class FilterPreferences(val sortOrder: SortOrder)
 
-class PreferencesManager @Inject constructor(@ApplicationContext context: Context) {
+@Singleton
+class PreferencesManager @Inject constructor (@ApplicationContext context: Context) {
     private val dataStore = context.createDataStore("user_preferences")
 
     val preferencesFlow = dataStore.data

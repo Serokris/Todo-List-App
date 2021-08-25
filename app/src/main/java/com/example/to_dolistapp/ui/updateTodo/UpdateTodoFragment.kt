@@ -14,8 +14,10 @@ import com.example.to_dolistapp.R
 import com.example.to_dolistapp.data.Todo
 import com.example.to_dolistapp.databinding.FragmentUpdateTodoBinding
 import com.example.to_dolistapp.viewmodel.TodoViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
+@AndroidEntryPoint
 class UpdateTodoFragment : Fragment() {
 
     private val viewModel: TodoViewModel by viewModels()

@@ -13,8 +13,10 @@ import com.example.to_dolistapp.R
 import com.example.to_dolistapp.data.Todo
 import com.example.to_dolistapp.databinding.FragmentAddTodoBinding
 import com.example.to_dolistapp.viewmodel.TodoViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
+@AndroidEntryPoint
 class AddTodoFragment : Fragment() {
 
     private val viewModel: TodoViewModel by viewModels()

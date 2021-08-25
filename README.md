@@ -13,6 +13,7 @@ The foundation of this app was created with two courses on creating a to-do list
 
 ## __Links__
 __[First course](https://www.youtube.com/playlist?list=PLrnPJCHvNZuCfAe7QK2BoMPkv2TGM_b0E)__
+
 __[Second course](https://www.youtube.com/playlist?list=PLoCYbRS6dPkJMThvLiPEaWGQ0tV2XL4v8)__
 
 ## __Components__
@@ -23,9 +24,9 @@ __[Second course](https://www.youtube.com/playlist?list=PLoCYbRS6dPkJMThvLiPEaWG
 * [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines)
 * [Data binding](https://developer.android.com/topic/libraries/data-binding)
 * [View Binding](https://developer.android.com/topic/libraries/view-binding)
-* [Dagger Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
+* [Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
 
 ## Installation
 
-1. Clone this project in your project folder : `git clone https://github.com/Serokris/MVVM-Todo-List-App`
+1. Clone this project in your project folder : `git@github.com:Serokris/MVVM-Todo-List-App.git`
 2. Open this project in Android Studio and do the following `Build Gradle Sync`

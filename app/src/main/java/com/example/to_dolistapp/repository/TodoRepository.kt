@@ -3,13 +3,11 @@ package com.example.to_dolistapp.repository
 import androidx.lifecycle.LiveData
 import com.example.to_dolistapp.data.SortOrder
 import com.example.to_dolistapp.data.Todo
-import com.example.to_dolistapp.data.TodoDatabase
+import com.example.to_dolistapp.data.TodoDao
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class TodoRepository(db: TodoDatabase) {
-
-    private val todoDao = db.todoDao()
-
+class TodoRepository @Inject constructor(private val todoDao: TodoDao) {
     suspend fun insert(todo: Todo) = todoDao.insert(todo)
 
     suspend fun update(todo: Todo) = todoDao.update(todo)
