@@ -4,7 +4,7 @@ This is a to-do list app that I developed as a home project for the Android oper
 In this app, you can create todo, mark them as done, sort them, delete them, and so on.
 The foundation of this app was created with two courses on creating a to-do list app, which you can find links to just below.
 
-![](screenshots/2021-08-23%2017.35.21.jpg)
+![](screenshots/2021-08-30%2021.43.25.jpg)
 ![](screenshots/2021-08-23%2017.35.25.jpg)
 ![](screenshots/2021-08-23%2017.35.28.jpg)
 ![](screenshots/2021-08-23%2017.35.33.jpg)
