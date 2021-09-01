@@ -117,9 +117,18 @@ class TodoListFragment : Fragment(), TodoListAdapter.OnTodoClickListener {
             R.id.action_delete_all -> deleteAllTodo()
             R.id.action_delete_all_completed -> deleteAllCompletedTodo()
             R.id.action_add_reminder_todo -> addReminderOfUncompletedTodo()
-            R.id.action_cancel_reminder -> TodoAlarmManager.cancelReminder(requireActivity())
+            R.id.action_cancel_reminder -> cancelReminder(requireContext())
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun cancelReminder(context: Context) {
+        if (TodoAlarmManager.isAlarmSet(context)) {
+            TodoAlarmManager.cancelReminder(context)
+            Toast.makeText(context, R.string.reminder_canceled, Toast.LENGTH_SHORT).show()
+            return
+        }
+        Toast.makeText(context, R.string.you_dont_have_reminder, Toast.LENGTH_SHORT).show()
     }
 
     private fun runQuery(query: String) {
