@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/todoListFragment"
-        android:name="com.example.to_dolistapp.ui.todolist.TodoListFragment"
+        android:name="com.example.to_dolistapp.presentation.todolist.TodoListFragment"
         android:label="To-Do List"
         tools:layout="@layout/fragment_todo_list">
         <action
@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/addTodoFragment"
-        android:name="com.example.to_dolistapp.ui.addTodo.AddTodoFragment"
+        android:name="com.example.to_dolistapp.presentation.addtodo.AddTodoFragment"
         android:label="Adding to-do"
         tools:layout="@layout/fragment_add_todo">
         <action
@@ -41,7 +41,7 @@
 
     <fragment
         android:id="@+id/updateTodoFragment"
-        android:name="com.example.to_dolistapp.ui.updateTodo.UpdateTodoFragment"
+        android:name="com.example.to_dolistapp.presentation.updatetodo.UpdateTodoFragment"
         android:label="Updating to-do"
         tools:layout="@layout/fragment_update_todo" >
         <action
@@ -52,6 +52,6 @@
             app:popUpToInclusive="true" />
         <argument
             android:name="todo"
-            app:argType="com.example.to_dolistapp.data.Todo" />
+            app:argType="com.example.to_dolistapp.domain.models.Todo" />
     </fragment>
 </navigation>

@@ -8,7 +8,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.example.to_dolistapp.R
-import com.example.to_dolistapp.ui.MainActivity
+import com.example.to_dolistapp.presentation.MainActivity
 
 class NotificationTodo {
     companion object {

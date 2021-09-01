@@ -1,4 +1,4 @@
-package com.example.to_dolistapp.ui.addTodo
+package com.example.to_dolistapp.presentation.addtodo
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -10,9 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.to_dolistapp.R
-import com.example.to_dolistapp.data.Todo
 import com.example.to_dolistapp.databinding.FragmentAddTodoBinding
-import com.example.to_dolistapp.viewmodel.TodoViewModel
+import com.example.to_dolistapp.domain.models.Todo
+import com.example.to_dolistapp.presentation.viewmodels.TodoViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 

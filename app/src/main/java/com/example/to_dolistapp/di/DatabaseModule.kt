@@ -2,7 +2,8 @@ package com.example.to_dolistapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.to_dolistapp.data.TodoDatabase
+import com.example.to_dolistapp.data.source.local.TodoDatabase
+import com.example.to_dolistapp.utils.Constants.DB_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,13 +13,13 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+class DatabaseModule {
     @Singleton
     @Provides
     fun provideTodoDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(
         context,
         TodoDatabase::class.java,
-        "todo-list-database"
+        DB_NAME
     ).build()
 
     @Singleton

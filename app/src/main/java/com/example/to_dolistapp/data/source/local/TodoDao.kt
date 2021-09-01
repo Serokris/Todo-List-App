@@ -1,7 +1,7 @@
-package com.example.to_dolistapp.data
+package com.example.to_dolistapp.data.source.local
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.to_dolistapp.domain.models.Todo
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -22,10 +22,10 @@ interface TodoDao {
     suspend fun deleteAllCompleted()
 
     @Query ("SELECT * FROM `todo-table` WHERE isCompleted = 1")
-    fun getAllCompleted(): LiveData<List<Todo>>
+    fun getAllCompleted(): Flow<List<Todo>>
 
     @Query ("SELECT * FROM `todo-table` WHERE isCompleted = 0")
-    fun getAllUncompleted() : LiveData<List<Todo>>
+    fun getAllUncompleted() : Flow<List<Todo>>
 
     fun getSortedTodoList(sortOrder: SortOrder): Flow<List<Todo>> {
         return when (sortOrder) {
@@ -41,5 +41,5 @@ interface TodoDao {
     fun getTodoListSortedByDateCreated(): Flow<List<Todo>>
 
     @Query ("SELECT * FROM `todo-table` WHERE description LIKE :searchQuery ORDER BY timestamp DESC")
-    fun databaseSearch(searchQuery: String): LiveData<List<Todo>>
+    fun databaseSearch(searchQuery: String): Flow<List<Todo>>
 }

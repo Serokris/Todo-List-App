@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ToDoListApp">
         <activity
-            android:name="com.example.to_dolistapp.ui.MainActivity"
+            android:name="com.example.to_dolistapp.presentation.MainActivity"
             android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,4 +1,4 @@
-package com.example.to_dolistapp.ui.todolist
+package com.example.to_dolistapp.presentation.todolist
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -15,12 +15,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.to_dolistapp.R
-import com.example.to_dolistapp.data.SortOrder
-import com.example.to_dolistapp.data.Todo
+import com.example.to_dolistapp.data.source.local.SortOrder
 import com.example.to_dolistapp.databinding.FragmentTodoListBinding
+import com.example.to_dolistapp.domain.models.Todo
+import com.example.to_dolistapp.presentation.viewmodels.TodoViewModel
 import com.example.to_dolistapp.utils.TodoAlarmManager
 import com.example.to_dolistapp.utils.observeOnce
-import com.example.to_dolistapp.viewmodel.TodoViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat

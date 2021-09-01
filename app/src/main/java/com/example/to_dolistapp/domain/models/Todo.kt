@@ -1,4 +1,4 @@
-package com.example.to_dolistapp.data
+package com.example.to_dolistapp.domain.models
 
 import android.os.Parcelable
 import androidx.room.Entity
