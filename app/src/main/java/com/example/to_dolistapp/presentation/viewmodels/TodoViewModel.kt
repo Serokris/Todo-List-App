@@ -9,6 +9,7 @@ import com.example.to_dolistapp.data.source.local.SortOrder
 import com.example.to_dolistapp.domain.models.Todo
 import com.example.to_dolistapp.domain.usecases.TodoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
@@ -38,15 +39,15 @@ class TodoViewModel @Inject constructor(
         preferencesManager.updateSortOrder(sortOrder)
     }
 
-    fun insert(todo: Todo) = viewModelScope.launch { todoUseCase.insert(todo) }
+    fun insert(todo: Todo) = viewModelScope.launch(Dispatchers.IO) { todoUseCase.insert(todo) }
 
-    fun update(todo: Todo) = viewModelScope.launch { todoUseCase.update(todo) }
+    fun update(todo: Todo) = viewModelScope.launch(Dispatchers.IO) { todoUseCase.update(todo) }
 
-    fun delete(todo: Todo) = viewModelScope.launch { todoUseCase.delete(todo) }
+    fun delete(todo: Todo) = viewModelScope.launch(Dispatchers.IO) { todoUseCase.delete(todo) }
 
-    fun deleteAll() = viewModelScope.launch { todoUseCase.deleteAll() }
+    fun deleteAll() = viewModelScope.launch(Dispatchers.IO) { todoUseCase.deleteAll() }
 
-    fun deleteAllCompleted() = viewModelScope.launch { todoUseCase.deleteAllCompleted() }
+    fun deleteAllCompleted() = viewModelScope.launch(Dispatchers.IO) { todoUseCase.deleteAllCompleted() }
 
     fun getAllCompleted(): LiveData<List<Todo>> = todoUseCase.getAllCompleted().asLiveData()
 
