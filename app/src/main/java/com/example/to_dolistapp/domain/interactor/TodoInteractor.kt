@@ -1,4 +1,4 @@
-package com.example.to_dolistapp.domain.usecases
+package com.example.to_dolistapp.domain.interactor
 
 import com.example.to_dolistapp.data.source.local.SortOrder
 import com.example.to_dolistapp.domain.models.Todo
@@ -6,7 +6,7 @@ import com.example.to_dolistapp.domain.repository.TodoRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class TodoUseCase @Inject constructor(private val todoRepository: TodoRepository) {
+class TodoInteractor @Inject constructor(private val todoRepository: TodoRepository) {
     suspend fun insert(todo: Todo) = todoRepository.insert(todo)
 
     suspend fun update(todo: Todo) = todoRepository.update(todo)
