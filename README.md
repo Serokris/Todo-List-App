@@ -22,7 +22,6 @@ __[Second course](https://www.youtube.com/playlist?list=PLoCYbRS6dPkJMThvLiPEaWG
 * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)
 * [Room](https://developer.android.com/jetpack/androidx/releases/room)
 * [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines)
-* [Data binding](https://developer.android.com/topic/libraries/data-binding)
 * [View Binding](https://developer.android.com/topic/libraries/view-binding)
 * [Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
 
