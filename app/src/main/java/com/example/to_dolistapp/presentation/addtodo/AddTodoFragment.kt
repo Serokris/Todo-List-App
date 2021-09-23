@@ -12,26 +12,35 @@ import androidx.navigation.fragment.findNavController
 import com.example.to_dolistapp.R
 import com.example.to_dolistapp.databinding.FragmentAddTodoBinding
 import com.example.to_dolistapp.domain.models.Todo
-import com.example.to_dolistapp.presentation.viewmodels.TodoViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
 class AddTodoFragment : Fragment() {
 
-    private val viewModel: TodoViewModel by viewModels()
+    private val viewModel: AddTodoViewModel by viewModels()
+    private lateinit var binding: FragmentAddTodoBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentAddTodoBinding.inflate(inflater)
+        binding = FragmentAddTodoBinding.inflate(inflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         val navController = findNavController()
 
         binding.apply {
             addTodoButton.setOnClickListener {
                 if (TextUtils.isEmpty(todoDescriptionEdt.text)) {
-                    Toast.makeText(requireContext(), R.string.field_must_not_be_empty, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        R.string.field_must_not_be_empty,
+                        Toast.LENGTH_SHORT
+                    ).show()
                     return@setOnClickListener
                 }
 
@@ -44,10 +53,13 @@ class AddTodoFragment : Fragment() {
                 )
 
                 viewModel.insert(todo)
-                Toast.makeText(requireContext(), R.string.todo_successfully_added, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    R.string.todo_successfully_added,
+                    Toast.LENGTH_SHORT
+                ).show()
                 navController.navigate(R.id.action_addTodoFragment_to_todoListFragment)
             }
         }
-        return binding.root
     }
 }

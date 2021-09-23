@@ -8,36 +8,41 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.to_dolistapp.R
 import com.example.to_dolistapp.databinding.FragmentUpdateTodoBinding
 import com.example.to_dolistapp.domain.models.Todo
-import com.example.to_dolistapp.presentation.viewmodels.TodoViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
 class UpdateTodoFragment : Fragment() {
 
-    private val viewModel: TodoViewModel by viewModels()
+    private val viewModel: UpdateTodoViewModel by viewModels()
+    private lateinit var binding: FragmentUpdateTodoBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentUpdateTodoBinding.inflate(inflater)
-        val args = UpdateTodoFragmentArgs.fromBundle(requireArguments())
-        val navController: NavController = findNavController()
+        binding = FragmentUpdateTodoBinding.inflate(inflater)
+        return binding.root
+    }
 
-        activity?.actionBar?.setDisplayShowHomeEnabled(true)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val args = UpdateTodoFragmentArgs.fromBundle(requireArguments())
+        val navController = findNavController()
 
         binding.apply {
             newTodoDescriptionEdt.setText(args.todo.description)
 
             updateButton.setOnClickListener {
                 if (TextUtils.isEmpty(newTodoDescriptionEdt.text)) {
-                    Toast.makeText(requireContext(), R.string.field_must_not_be_empty, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        R.string.field_must_not_be_empty,
+                        Toast.LENGTH_SHORT
+                    ).show()
                     return@setOnClickListener
                 }
 
@@ -50,10 +55,13 @@ class UpdateTodoFragment : Fragment() {
                 )
 
                 viewModel.update(todo)
-                Toast.makeText(requireContext(), R.string.todo_successfully_updated, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    R.string.todo_successfully_updated,
+                    Toast.LENGTH_SHORT
+                ).show()
                 navController.navigate(R.id.action_updateTodoFragment_to_todoListFragment)
             }
         }
-        return binding.root
     }
 }

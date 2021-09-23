@@ -18,7 +18,6 @@ import com.example.to_dolistapp.R
 import com.example.to_dolistapp.data.source.local.SortOrder
 import com.example.to_dolistapp.databinding.FragmentTodoListBinding
 import com.example.to_dolistapp.domain.models.Todo
-import com.example.to_dolistapp.presentation.viewmodels.TodoViewModel
 import com.example.to_dolistapp.utils.TodoAlarmManager
 import com.example.to_dolistapp.utils.observeOnce
 import com.google.android.material.snackbar.Snackbar
@@ -31,22 +30,29 @@ import java.util.*
 @AndroidEntryPoint
 class TodoListFragment : Fragment(), TodoListAdapter.OnTodoClickListener {
 
-    private val viewModel: TodoViewModel by viewModels()
+    private val viewModel: TodoListViewModel by viewModels()
     private lateinit var adapter: TodoListAdapter
     private lateinit var navController: NavController
+    private lateinit var binding: FragmentTodoListBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding: FragmentTodoListBinding = FragmentTodoListBinding.inflate(inflater)
-        navController = findNavController()
+        binding = FragmentTodoListBinding.inflate(inflater)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        navController = findNavController()
         adapter = TodoListAdapter(this)
 
         viewModel.getAllTodo.observe(viewLifecycleOwner) { list ->
             adapter.submitList(list)
-            binding.imageTodoList.visibility = if (list.isEmpty()) View.VISIBLE else View.INVISIBLE
+            binding.imageTodoList.visibility =
+                if (list.isEmpty()) View.VISIBLE else View.INVISIBLE
         }
 
         binding.apply {
@@ -77,7 +83,6 @@ class TodoListFragment : Fragment(), TodoListAdapter.OnTodoClickListener {
         }).attachToRecyclerView(binding.todosRecyclerView)
 
         setHasOptionsMenu(true)
-        return binding.root
     }
 
     override fun onResume() {
@@ -87,7 +92,7 @@ class TodoListFragment : Fragment(), TodoListAdapter.OnTodoClickListener {
 
     private fun hideKeyboard(activity: Activity) {
         val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(activity.currentFocus?.windowToken,0)
+        imm.hideSoftInputFromWindow(activity.currentFocus?.windowToken, 0)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -158,12 +163,19 @@ class TodoListFragment : Fragment(), TodoListAdapter.OnTodoClickListener {
                     TodoAlarmManager.createAlarm(requireActivity(), calendar)
                     Toast.makeText(
                         context,
-                        "You will get a reminder in ${DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.time)}",
-                        Toast.LENGTH_LONG).show()
+                        "You will get a reminder in ${
+                            DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.time)
+                        }",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
                 materialTimePicker.show(requireFragmentManager(), "time-picker")
             } else {
-                Toast.makeText(context, R.string.you_dont_have_uncompleted_todos, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    R.string.you_dont_have_uncompleted_todos,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -198,13 +210,21 @@ class TodoListFragment : Fragment(), TodoListAdapter.OnTodoClickListener {
                     viewModel.deleteAllCompleted()
                 }
             } else {
-                Toast.makeText(requireContext(), R.string.you_dont_have_completed_todos, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    R.string.you_dont_have_completed_todos,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
 
     override fun onTodoClick(todo: Todo) {
-        navController.navigate(TodoListFragmentDirections.actionTodoListFragmentToUpdateTodoFragment(todo))
+        navController.navigate(
+            TodoListFragmentDirections.actionTodoListFragmentToUpdateTodoFragment(
+                todo
+            )
+        )
     }
 
     override fun onDeleteTodo(todo: Todo) {
