@@ -4,11 +4,13 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -18,6 +20,7 @@ import com.example.to_dolistapp.R
 import com.example.to_dolistapp.data.source.local.SortOrder
 import com.example.to_dolistapp.databinding.FragmentTodoListBinding
 import com.example.to_dolistapp.domain.models.Todo
+import com.example.to_dolistapp.presentation.base.BaseBindingFragment
 import com.example.to_dolistapp.utils.TodoAlarmManager
 import com.example.to_dolistapp.utils.observeOnce
 import com.google.android.material.snackbar.Snackbar
@@ -28,25 +31,22 @@ import java.text.DateFormat
 import java.util.*
 
 @AndroidEntryPoint
-class TodoListFragment : Fragment(), TodoListAdapter.OnTodoClickListener {
+class TodoListFragment :
+    BaseBindingFragment<FragmentTodoListBinding>(FragmentTodoListBinding::inflate),
+    TodoListAdapter.OnTodoClickListener {
 
     private val viewModel: TodoListViewModel by viewModels()
     private lateinit var adapter: TodoListAdapter
     private lateinit var navController: NavController
-    private lateinit var binding: FragmentTodoListBinding
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentTodoListBinding.inflate(inflater)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         navController = findNavController()
+        initViews()
+    }
+
+    private fun initViews() {
         adapter = TodoListAdapter(this)
 
         viewModel.getAllTodo.observe(viewLifecycleOwner) { list ->
@@ -169,7 +169,7 @@ class TodoListFragment : Fragment(), TodoListAdapter.OnTodoClickListener {
                         Toast.LENGTH_LONG
                     ).show()
                 }
-                materialTimePicker.show(requireFragmentManager(), "time-picker")
+                materialTimePicker.show(parentFragmentManager, "time-picker")
             } else {
                 Toast.makeText(
                     context,
@@ -199,7 +199,8 @@ class TodoListFragment : Fragment(), TodoListAdapter.OnTodoClickListener {
                 viewModel.deleteAll()
             }
         } else {
-            Toast.makeText(requireContext(), R.string.you_dont_have_todos, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), R.string.you_dont_have_todos, Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
