@@ -16,4 +16,8 @@
     <string name="you_dont_have_reminder">You don\'t have a reminder set</string>
     <string name="select_time_for_reminder">Select the time for the to-do\'s reminder</string>
     <string name="reminder_canceled">Reminder canceled</string>
+    <string name="search">Search</string>
+    <string name="sort">Sort</string>
+    <string name="sort_by_name">Sort by name</string>
+    <string name="sort_by_date_created">Sort by date created</string>
 </resources>

@@ -1,7 +1,7 @@
-package com.example.to_dolistapp.domain.repository
+package com.example.domain.repository
 
-import com.example.to_dolistapp.data.source.local.SortOrder
-import com.example.to_dolistapp.domain.models.Todo
+import com.example.domain.common.SortOrder
+import com.example.domain.models.Todo
 import kotlinx.coroutines.flow.Flow
 
 interface TodoRepository {

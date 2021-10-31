@@ -52,6 +52,6 @@
             app:popUpToInclusive="true" />
         <argument
             android:name="todo"
-            app:argType="com.example.to_dolistapp.domain.models.Todo" />
+            app:argType="com.example.data.models.TodoEntity" />
     </fragment>
 </navigation>

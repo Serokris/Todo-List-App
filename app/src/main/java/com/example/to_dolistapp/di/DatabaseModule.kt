@@ -2,7 +2,7 @@ package com.example.to_dolistapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.to_dolistapp.data.source.local.TodoDatabase
+import com.example.data.source.local.TodoDatabase
 import com.example.to_dolistapp.utils.Constants.DB_NAME
 import dagger.Module
 import dagger.Provides

@@ -1,8 +1,8 @@
-package com.example.to_dolistapp.domain.interactor
+package com.example.domain.interactor
 
-import com.example.to_dolistapp.data.source.local.SortOrder
-import com.example.to_dolistapp.domain.models.Todo
-import com.example.to_dolistapp.domain.repository.TodoRepository
+import com.example.domain.common.SortOrder
+import com.example.domain.models.Todo
+import com.example.domain.repository.TodoRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

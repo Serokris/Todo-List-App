@@ -16,10 +16,11 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.data.mappers.toTodoEntity
+import com.example.domain.common.SortOrder
+import com.example.domain.models.Todo
 import com.example.to_dolistapp.R
-import com.example.to_dolistapp.data.source.local.SortOrder
 import com.example.to_dolistapp.databinding.FragmentTodoListBinding
-import com.example.to_dolistapp.domain.models.Todo
 import com.example.to_dolistapp.presentation.base.BaseBindingFragment
 import com.example.to_dolistapp.utils.TodoAlarmManager
 import com.example.to_dolistapp.utils.observeOnce
@@ -223,7 +224,7 @@ class TodoListFragment :
     override fun onTodoClick(todo: Todo) {
         navController.navigate(
             TodoListFragmentDirections.actionTodoListFragmentToUpdateTodoFragment(
-                todo
+                todo.toTodoEntity()
             )
         )
     }

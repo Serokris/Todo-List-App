@@ -1,4 +1,4 @@
-package com.example.to_dolistapp.data.source.local
+package com.example.data.source.local
 
 import android.content.Context
 import android.util.Log
@@ -6,6 +6,8 @@ import androidx.datastore.preferences.createDataStore
 import androidx.datastore.preferences.edit
 import androidx.datastore.preferences.emptyPreferences
 import androidx.datastore.preferences.preferencesKey
+import com.example.domain.common.FilterPreferences
+import com.example.domain.common.SortOrder
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -14,10 +16,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 private const val TAG = "PreferencesManager"
-
-enum class SortOrder { BY_NAME, BY_DATE }
-
-data class FilterPreferences(val sortOrder: SortOrder)
 
 @Singleton
 class PreferencesManager @Inject constructor (@ApplicationContext context: Context) {

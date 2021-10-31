@@ -1,19 +1,20 @@
-package com.example.to_dolistapp.data.source.local
+package com.example.data.source.local
 
 import androidx.room.*
-import com.example.to_dolistapp.domain.models.Todo
+import com.example.data.models.TodoEntity
+import com.example.domain.common.SortOrder
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TodoDao {
     @Insert
-    suspend fun insert(todo: Todo)
+    suspend fun insert(todo: TodoEntity)
 
     @Delete
-    suspend fun delete(todo: Todo)
+    suspend fun delete(todo: TodoEntity)
 
     @Update
-    suspend fun update(todo: Todo)
+    suspend fun update(todo: TodoEntity)
 
     @Query ("DELETE FROM `todo-table`")
     suspend fun deleteAll()
@@ -22,12 +23,12 @@ interface TodoDao {
     suspend fun deleteAllCompleted()
 
     @Query ("SELECT * FROM `todo-table` WHERE isCompleted = 1")
-    fun getAllCompleted(): Flow<List<Todo>>
+    fun getAllCompleted(): Flow<List<TodoEntity>>
 
     @Query ("SELECT * FROM `todo-table` WHERE isCompleted = 0")
-    fun getAllUncompleted() : Flow<List<Todo>>
+    fun getAllUncompleted() : Flow<List<TodoEntity>>
 
-    fun getSortedTodoList(sortOrder: SortOrder): Flow<List<Todo>> {
+    fun getSortedTodoList(sortOrder: SortOrder): Flow<List<TodoEntity>> {
         return when (sortOrder) {
             SortOrder.BY_NAME -> getTodoListSortedByName()
             SortOrder.BY_DATE -> getTodoListSortedByDateCreated()
@@ -35,11 +36,11 @@ interface TodoDao {
     }
 
     @Query("SELECT * FROM `todo-table` ORDER BY description ASC")
-    fun getTodoListSortedByName(): Flow<List<Todo>>
+    fun getTodoListSortedByName(): Flow<List<TodoEntity>>
 
     @Query("SELECT * FROM `todo-table` ORDER BY timestamp ASC")
-    fun getTodoListSortedByDateCreated(): Flow<List<Todo>>
+    fun getTodoListSortedByDateCreated(): Flow<List<TodoEntity>>
 
     @Query ("SELECT * FROM `todo-table` WHERE description LIKE :searchQuery ORDER BY timestamp DESC")
-    fun databaseSearch(searchQuery: String): Flow<List<Todo>>
+    fun databaseSearch(searchQuery: String): Flow<List<TodoEntity>>
 }

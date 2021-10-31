@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.to_dolistapp.data.source.local.PreferencesManager
-import com.example.to_dolistapp.data.source.local.SortOrder
-import com.example.to_dolistapp.domain.interactor.TodoInteractor
-import com.example.to_dolistapp.domain.models.Todo
+import com.example.data.source.local.PreferencesManager
+import com.example.domain.common.SortOrder
+import com.example.domain.interactor.TodoInteractor
+import com.example.domain.models.Todo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

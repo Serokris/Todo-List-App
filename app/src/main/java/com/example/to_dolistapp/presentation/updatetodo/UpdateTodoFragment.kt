@@ -8,7 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.to_dolistapp.R
 import com.example.to_dolistapp.databinding.FragmentUpdateTodoBinding
-import com.example.to_dolistapp.domain.models.Todo
 import com.example.to_dolistapp.presentation.base.BaseBindingFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,7 +40,7 @@ class UpdateTodoFragment :
 
                 val todoDescription = newTodoDescriptionEdt.text.toString().trim()
 
-                val todo = Todo(
+                val todo = com.example.domain.models.Todo(
                     args.todo.id,
                     todoDescription,
                     args.todo.isCompleted
