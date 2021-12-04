@@ -20,7 +20,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -41,11 +40,11 @@ android {
     }
 }
 
-val kotlinVersion = rootProject.extra.get("kotlinVersion") as String
-val navigationVersion = rootProject.extra.get("navigationVersion") as String
-val roomVersion = rootProject.extra.get("roomVersion") as String
-val daggerVersion = rootProject.extra.get("daggerVersion") as String
-val dataStoreVersion = rootProject.extra.get("dataStoreVersion") as String
+val kotlinVersion: String by rootProject.extra
+val navigationVersion: String by rootProject.extra
+val roomVersion: String by rootProject.extra
+val daggerVersion: String by rootProject.extra
+val dataStoreVersion: String by rootProject.extra
 val lifecycleVersion = "2.4.0"
 
 dependencies {
