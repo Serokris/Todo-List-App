@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
 data class TodoEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    var description: String,
-    var isCompleted: Boolean,
+    val description: String,
+    val isCompleted: Boolean,
     val timestamp: Long = System.currentTimeMillis()
 ) : Parcelable

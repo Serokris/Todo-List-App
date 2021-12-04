@@ -15,11 +15,13 @@ import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
-private const val TAG = "PreferencesManager"
-
 @Singleton
-class PreferencesManager @Inject constructor (@ApplicationContext context: Context) {
+class PreferencesManager @Inject constructor(@ApplicationContext context: Context) {
     private val dataStore = context.createDataStore("user_preferences")
+
+    companion object {
+        private const val TAG = "PreferencesManager"
+    }
 
     val preferencesFlow = dataStore.data
         .catch { exception ->
