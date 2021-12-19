@@ -44,13 +44,8 @@ class TodoRepositoryImpl @Inject constructor(
             .map { todoEntityList -> todoEntityList.map { todoEntity -> todoEntity.toTodo() } }
     }
 
-    override fun getSortedTodoList(sortOrder: SortOrder): Flow<List<Todo>> {
-        return todoDao.getSortedTodoList(sortOrder)
-            .map { todoEntityList -> todoEntityList.map { todoEntity -> todoEntity.toTodo() } }
-    }
-
-    override fun databaseSearch(searchQuery: String): Flow<List<Todo>> {
-        return todoDao.databaseSearch(searchQuery)
+    override fun getSortedTodoList(searchQuery: String, sortOrder: SortOrder): Flow<List<Todo>> {
+        return todoDao.getSortedTodoList(searchQuery, sortOrder)
             .map { todoEntityList -> todoEntityList.map { todoEntity -> todoEntity.toTodo() } }
     }
 }

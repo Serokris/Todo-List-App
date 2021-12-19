@@ -9,13 +9,14 @@ import java.util.*
 
 class TodoAlarmManager {
     companion object {
-        fun createAlarm(context: Context, calendar : Calendar) {
+        fun createAlarm(context: Context, calendar: Calendar) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val intent = Intent(context, NotificationReceiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(
-                context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT
+            )
 
-            if (calendar.before(Calendar.getInstance()))  {
+            if (calendar.before(Calendar.getInstance())) {
                 calendar.add(Calendar.DATE, 1)
             }
 
@@ -40,7 +41,8 @@ class TodoAlarmManager {
         fun isAlarmSet(context: Context): Boolean {
             val intent = Intent(context, NotificationReceiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(
-                context, 0, intent, PendingIntent.FLAG_NO_CREATE)
+                context, 0, intent, PendingIntent.FLAG_NO_CREATE
+            )
             return pendingIntent != null
         }
     }

@@ -1,8 +1,6 @@
 package com.example.to_dolistapp.presentation.todolist
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.data.source.local.PreferencesManager
 import com.example.domain.common.SortOrder
@@ -10,6 +8,7 @@ import com.example.domain.interactor.TodoInteractor
 import com.example.domain.models.Todo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
@@ -21,23 +20,20 @@ class TodoListViewModel @Inject constructor(
     private val todoInteractor: TodoInteractor,
     private val preferencesManager: PreferencesManager
 ) : ViewModel() {
-    private val searchQuery = MutableStateFlow("")
-    private val preferencesFlow = preferencesManager.preferencesFlow
 
-    private val todoListFlow = combine(
+    private val preferencesFlow = preferencesManager.preferencesFlow
+    val searchQuery = MutableStateFlow("")
+
+    private val _allTodoList = combine(
         searchQuery,
         preferencesFlow
     ) { query, filterPreferences ->
         Pair(query, filterPreferences)
-    }.flatMapLatest { (_, filterPreferences) ->
-        todoInteractor.getSortedTodoList(filterPreferences.sortOrder)
+    }.flatMapLatest { (query, filterPreferences) ->
+        todoInteractor.getSortedTodoList(query, filterPreferences.sortOrder)
     }
 
-    val getAllTodo = todoListFlow.asLiveData()
-
-    fun onSortedOrderSelected(sortOrder: SortOrder) = viewModelScope.launch {
-        preferencesManager.updateSortOrder(sortOrder)
-    }
+    val allTodoList = _allTodoList
 
     fun insert(todo: Todo) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -63,21 +59,21 @@ class TodoListViewModel @Inject constructor(
         }
     }
 
-    fun getAllCompleted(): LiveData<List<Todo>> {
-        return todoInteractor.getAllCompleted().asLiveData()
+    fun getAllCompleted(): Flow<List<Todo>> {
+        return todoInteractor.getAllCompleted()
     }
 
-    fun getAllUncompleted(): LiveData<List<Todo>> {
-        return todoInteractor.getAllUncompleted().asLiveData()
-    }
-
-    fun databaseSearch(searchQuery: String): LiveData<List<Todo>> {
-        return todoInteractor.databaseSearch(searchQuery).asLiveData()
+    fun getAllUncompleted(): Flow<List<Todo>> {
+        return todoInteractor.getAllUncompleted()
     }
 
     fun onTodoCheckedChanged(todo: Todo, isChecked: Boolean) {
         viewModelScope.launch {
             todoInteractor.update(todo.copy(isCompleted = isChecked))
         }
+    }
+
+    fun onSortedOrderSelected(sortOrder: SortOrder) = viewModelScope.launch {
+        preferencesManager.updateSortOrder(sortOrder)
     }
 }

@@ -16,31 +16,28 @@ interface TodoDao {
     @Update
     suspend fun update(todo: TodoEntity)
 
-    @Query ("DELETE FROM `todo-table`")
+    @Query("DELETE FROM `todo-table`")
     suspend fun deleteAll()
 
-    @Query ("DELETE FROM `todo-table` WHERE isCompleted = 1")
+    @Query("DELETE FROM `todo-table` WHERE isCompleted = 1")
     suspend fun deleteAllCompleted()
 
-    @Query ("SELECT * FROM `todo-table` WHERE isCompleted = 1")
+    @Query("SELECT * FROM `todo-table` WHERE isCompleted = 1")
     fun getAllCompleted(): Flow<List<TodoEntity>>
 
-    @Query ("SELECT * FROM `todo-table` WHERE isCompleted = 0")
-    fun getAllUncompleted() : Flow<List<TodoEntity>>
+    @Query("SELECT * FROM `todo-table` WHERE isCompleted = 0")
+    fun getAllUncompleted(): Flow<List<TodoEntity>>
 
-    fun getSortedTodoList(sortOrder: SortOrder): Flow<List<TodoEntity>> {
+    fun getSortedTodoList(searchQuery: String, sortOrder: SortOrder): Flow<List<TodoEntity>> {
         return when (sortOrder) {
-            SortOrder.BY_NAME -> getTodoListSortedByName()
-            SortOrder.BY_DATE -> getTodoListSortedByDateCreated()
+            SortOrder.BY_NAME -> getTodoListSortedByName(searchQuery)
+            SortOrder.BY_DATE -> getTodoListSortedByDateCreated(searchQuery)
         }
     }
 
-    @Query("SELECT * FROM `todo-table` ORDER BY description ASC")
-    fun getTodoListSortedByName(): Flow<List<TodoEntity>>
+    @Query("SELECT * FROM `todo-table` WHERE description LIKE '%' || :searchQuery || '%' ORDER BY description ASC")
+    fun getTodoListSortedByName(searchQuery: String): Flow<List<TodoEntity>>
 
-    @Query("SELECT * FROM `todo-table` ORDER BY timestamp ASC")
-    fun getTodoListSortedByDateCreated(): Flow<List<TodoEntity>>
-
-    @Query ("SELECT * FROM `todo-table` WHERE description LIKE :searchQuery ORDER BY timestamp DESC")
-    fun databaseSearch(searchQuery: String): Flow<List<TodoEntity>>
+    @Query("SELECT * FROM `todo-table` WHERE description LIKE '%' || :searchQuery || '%' ORDER BY timestamp ASC")
+    fun getTodoListSortedByDateCreated(searchQuery: String): Flow<List<TodoEntity>>
 }

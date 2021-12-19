@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -22,11 +23,16 @@ import com.example.to_dolistapp.R
 import com.example.to_dolistapp.databinding.FragmentTodoListBinding
 import com.example.to_dolistapp.presentation.base.BaseFragment
 import com.example.to_dolistapp.utils.TodoAlarmManager
-import com.example.to_dolistapp.utils.observeOnce
+import com.example.to_dolistapp.utils.collectOnLifecycle
+import com.example.to_dolistapp.utils.onQueryTextChanged
+import com.example.to_dolistapp.utils.showToast
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.job
+import kotlinx.coroutines.launch
 import java.text.DateFormat
 import java.util.*
 
@@ -42,6 +48,8 @@ class TodoListFragment :
     private val navController by lazy(LazyThreadSafetyMode.NONE) {
         findNavController()
     }
+    private var todoList: List<Todo> = emptyList()
+    private var searchView: SearchView? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,10 +58,11 @@ class TodoListFragment :
     }
 
     private fun initViews() {
-        viewModel.getAllTodo.observe(viewLifecycleOwner) { list ->
-            adapter.submitList(list)
+        collectOnLifecycle(viewModel.allTodoList) { todoList ->
+            this.todoList = todoList
+            adapter.submitList(todoList)
             binding.imageTodoList.visibility =
-                if (list.isEmpty()) View.VISIBLE else View.INVISIBLE
+                if (todoList.isEmpty()) View.VISIBLE else View.INVISIBLE
         }
 
         binding.apply {
@@ -100,20 +109,18 @@ class TodoListFragment :
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu, menu)
 
-        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        val searchItem = menu.findItem(R.id.action_search)
+        searchView = searchItem.actionView as SearchView
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return true
-            }
+        val searchQuery = viewModel.searchQuery.value
+        if (searchQuery.isNotEmpty()) {
+            searchItem.expandActionView()
+            searchView?.setQuery(searchQuery, false)
+        }
 
-            override fun onQueryTextChange(text: String?): Boolean {
-                if (text != null) {
-                    runQuery(text)
-                }
-                return true
-            }
-        })
+        searchView?.onQueryTextChanged { text ->
+            viewModel.searchQuery.value = text
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -131,52 +138,43 @@ class TodoListFragment :
     private fun cancelReminder(context: Context) {
         if (TodoAlarmManager.isAlarmSet(context)) {
             TodoAlarmManager.cancelReminder(context)
-            Toast.makeText(context, R.string.reminder_canceled, Toast.LENGTH_SHORT).show()
+            showToast(R.string.reminder_canceled)
             return
         }
-        Toast.makeText(context, R.string.you_dont_have_reminder, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun runQuery(query: String) {
-        val searchQuery = "%$query%"
-        viewModel.databaseSearch(searchQuery).observe(viewLifecycleOwner, { tasks ->
-            adapter.submitList(tasks)
-        })
+        showToast(R.string.you_dont_have_reminder)
     }
 
     private fun addReminderOfUncompletedTodo() {
-        viewModel.getAllUncompleted().observeOnce { list ->
-            if (list.isNotEmpty()) {
-                val materialTimePicker = MaterialTimePicker.Builder()
-                    .setTimeFormat(TimeFormat.CLOCK_24H)
-                    .setHour(12)
-                    .setMinute(0)
-                    .setTitleText(R.string.select_time_for_reminder)
-                    .build()
+        viewModel.viewModelScope.launch {
+            viewModel.getAllUncompleted().collect { todoList ->
+                if (todoList.isNotEmpty()) {
+                    val materialTimePicker = MaterialTimePicker.Builder()
+                        .setTimeFormat(TimeFormat.CLOCK_24H)
+                        .setHour(12)
+                        .setMinute(0)
+                        .setTitleText(R.string.select_time_for_reminder)
+                        .build()
 
-                materialTimePicker.addOnPositiveButtonClickListener {
-                    val calendar = Calendar.getInstance()
-                    calendar.set(Calendar.MILLISECOND, 0)
-                    calendar.set(Calendar.SECOND, 0)
-                    calendar.set(Calendar.MINUTE, materialTimePicker.minute)
-                    calendar.set(Calendar.HOUR_OF_DAY, materialTimePicker.hour)
+                    materialTimePicker.addOnPositiveButtonClickListener {
+                        val calendar = Calendar.getInstance()
+                        calendar.set(Calendar.MILLISECOND, 0)
+                        calendar.set(Calendar.SECOND, 0)
+                        calendar.set(Calendar.MINUTE, materialTimePicker.minute)
+                        calendar.set(Calendar.HOUR_OF_DAY, materialTimePicker.hour)
 
-                    TodoAlarmManager.createAlarm(requireActivity(), calendar)
-                    Toast.makeText(
-                        context,
-                        "You will get a reminder in ${
-                            DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.time)
-                        }",
-                        Toast.LENGTH_LONG
-                    ).show()
+                        TodoAlarmManager.createAlarm(requireActivity(), calendar)
+                        showToast(
+                            "You will get a reminder in ${
+                                DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.time)
+                            }",
+                            Toast.LENGTH_LONG
+                        )
+                    }
+                    materialTimePicker.show(parentFragmentManager, "time-picker")
+                } else {
+                    showToast(R.string.you_dont_have_uncompleted_todos)
                 }
-                materialTimePicker.show(parentFragmentManager, "time-picker")
-            } else {
-                Toast.makeText(
-                    context,
-                    R.string.you_dont_have_uncompleted_todos,
-                    Toast.LENGTH_SHORT
-                ).show()
+                this.coroutineContext.job.cancel()
             }
         }
     }
@@ -195,28 +193,26 @@ class TodoListFragment :
     }
 
     private fun deleteAllTodo() {
-        if (viewModel.getAllTodo.value?.isNotEmpty() == true) {
+        if (todoList.isNotEmpty()) {
             createAlertDialog("Delete all to-do's?") {
                 viewModel.deleteAll()
             }
         } else {
-            Toast.makeText(requireContext(), R.string.you_dont_have_todos, Toast.LENGTH_SHORT)
-                .show()
+            showToast(R.string.you_dont_have_todos)
         }
     }
 
     private fun deleteAllCompletedTodo() {
-        viewModel.getAllCompleted().observeOnce { list ->
-            if (list.isNotEmpty()) {
-                createAlertDialog("Delete all completed to-do's?") {
-                    viewModel.deleteAllCompleted()
+        viewModel.viewModelScope.launch {
+            viewModel.getAllCompleted().collect { todoList ->
+                if (todoList.isNotEmpty()) {
+                    createAlertDialog("Delete all completed to-do's?") {
+                        viewModel.deleteAllCompleted()
+                    }
+                } else {
+                    showToast(R.string.you_dont_have_completed_todos)
                 }
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    R.string.you_dont_have_completed_todos,
-                    Toast.LENGTH_SHORT
-                ).show()
+                this.coroutineContext.job.cancel()
             }
         }
     }
@@ -241,5 +237,10 @@ class TodoListFragment :
 
     override fun onCheckBoxClick(todo: Todo, isCompleted: Boolean) {
         viewModel.onTodoCheckedChanged(todo, isCompleted)
+    }
+
+    override fun onDestroyView() {
+        searchView?.setOnQueryTextListener(null)
+        super.onDestroyView()
     }
 }

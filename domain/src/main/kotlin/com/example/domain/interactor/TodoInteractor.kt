@@ -21,11 +21,7 @@ class TodoInteractor @Inject constructor(private val todoRepository: TodoReposit
 
     fun getAllUncompleted(): Flow<List<Todo>> = todoRepository.getAllUncompleted()
 
-    fun getSortedTodoList(sortOrder: SortOrder): Flow<List<Todo>> {
-        return todoRepository.getSortedTodoList(sortOrder)
-    }
-
-    fun databaseSearch(searchQuery: String): Flow<List<Todo>> {
-        return todoRepository.databaseSearch(searchQuery)
+    fun getSortedTodoList(searchQuery: String, sortOrder: SortOrder): Flow<List<Todo>> {
+        return todoRepository.getSortedTodoList(searchQuery, sortOrder)
     }
 }

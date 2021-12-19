@@ -19,7 +19,5 @@ interface TodoRepository {
 
     fun getAllUncompleted(): Flow<List<Todo>>
 
-    fun getSortedTodoList(sortOrder: SortOrder): Flow<List<Todo>>
-
-    fun databaseSearch(searchQuery: String): Flow<List<Todo>>
+    fun getSortedTodoList(searchQuery: String, sortOrder: SortOrder): Flow<List<Todo>>
 }
