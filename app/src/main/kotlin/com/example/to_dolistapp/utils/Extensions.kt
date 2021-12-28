@@ -11,6 +11,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 inline fun SearchView.onQueryTextChanged(crossinline listener: (String) -> Unit) {
@@ -30,6 +31,14 @@ fun <T> Fragment.collectOnLifecycle(flow: Flow<T>, collect: suspend (T) -> Unit)
     return viewLifecycleOwner.lifecycleScope.launch {
         repeatOnLifecycle(Lifecycle.State.STARTED) {
             flow.collect(collect)
+        }
+    }
+}
+
+fun <T> Fragment.collectLatestOnLifecycle(flow: Flow<T>, collectLatest: suspend (T) -> Unit): Job {
+    return viewLifecycleOwner.lifecycleScope.launch {
+        repeatOnLifecycle(Lifecycle.State.STARTED) {
+            flow.collectLatest(collectLatest)
         }
     }
 }
