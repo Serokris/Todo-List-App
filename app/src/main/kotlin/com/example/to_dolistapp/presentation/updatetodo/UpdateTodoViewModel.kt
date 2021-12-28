@@ -6,11 +6,12 @@ import com.example.domain.models.Todo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import com.example.domain.interactor.TodoInteractor
 import javax.inject.Inject
 
 @HiltViewModel
 class UpdateTodoViewModel @Inject constructor(
-    private val todoInteractor: com.example.domain.interactor.TodoInteractor
+    private val todoInteractor: TodoInteractor
 ) : ViewModel() {
 
     fun update(todo: Todo) {
