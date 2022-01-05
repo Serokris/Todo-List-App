@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class TodoInteractor @Inject constructor(private val todoRepository: TodoRepository) {
 
-    suspend fun insert(todo: Todo) {
+    suspend fun add(todo: Todo) {
         if (todo.description.isBlank()) {
             throw InvalidTodoException("The todo description should not be empty!")
         }

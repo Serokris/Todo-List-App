@@ -24,7 +24,7 @@ class AddTodoViewModel @Inject constructor(
     fun insert(todo: Todo) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                todoInteractor.insert(todo)
+                todoInteractor.add(todo)
                 _todoInsertionEvent.value =
                     TodoAddUpdateEvent.Success("The to-do has been successfully added!")
             } catch (e: InvalidTodoException) {

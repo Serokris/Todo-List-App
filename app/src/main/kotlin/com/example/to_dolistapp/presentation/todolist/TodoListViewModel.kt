@@ -37,7 +37,7 @@ class TodoListViewModel @Inject constructor(
 
     fun insert(todo: Todo) {
         viewModelScope.launch(Dispatchers.IO) {
-            todoInteractor.insert(todo)
+            todoInteractor.add(todo)
         }
     }
 
