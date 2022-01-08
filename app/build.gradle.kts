@@ -45,6 +45,8 @@ val navigationVersion: String by rootProject.extra
 val roomVersion: String by rootProject.extra
 val daggerVersion: String by rootProject.extra
 val dataStoreVersion: String by rootProject.extra
+val jUnitVersion: String by rootProject.extra
+val androidTestExtension: String by rootProject.extra
 val lifecycleVersion = "2.4.0"
 
 dependencies {
@@ -58,8 +60,8 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.2")
 
     // Testing
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    testImplementation("junit:junit:$jUnitVersion")
+    androidTestImplementation("androidx.test.ext:junit:$androidTestExtension")
 
     // Navigation Component
     implementation("androidx.navigation:navigation-fragment-ktx:$navigationVersion")

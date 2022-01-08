@@ -1,31 +1,24 @@
-package com.example.to_dolistapp.domain.interactor
+package com.example.domain.interactor
 
 import com.example.domain.common.InvalidTodoException
-import com.example.domain.interactor.TodoInteractor
 import com.example.domain.models.Todo
-import com.example.to_dolistapp.data.repository.FakeTodoRepository
-import kotlinx.coroutines.flow.first
+import com.example.domain.repository.TodoRepository
 import kotlinx.coroutines.runBlocking
-import org.junit.Before
 import org.junit.Test
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 
 class UpdateTodoTest {
 
-    private val fakeTodoRepository = FakeTodoRepository()
+    private val fakeTodoRepository = mock<TodoRepository>()
     private val todoInteractor = TodoInteractor(fakeTodoRepository)
     private val todo = Todo(0, "Description", false)
 
-    @Before
-    fun setUp() = runBlocking {
-        todoInteractor.add(todo)
-    }
-
     @Test
     fun `Update todo, correct case`() = runBlocking {
-        todoInteractor.update(todo.copy(description = "New Description"))
-
-        val updatedTodo = todoInteractor.getAllUncompleted().first()[0]
-        assert(updatedTodo != todo)
+        val newDescription = "New Description"
+        todoInteractor.update(todo.copy(description = newDescription))
+        verify(fakeTodoRepository).update(todo.copy(description = newDescription))
     }
 
     @Test(expected = InvalidTodoException::class)

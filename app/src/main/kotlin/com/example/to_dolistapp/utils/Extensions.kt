@@ -27,16 +27,6 @@ inline fun SearchView.onQueryTextChanged(crossinline listener: (String) -> Unit)
     })
 }
 
-inline fun <T> Iterable<T>.takeIf(condition: (T) -> Boolean): List<T> {
-    val list = ArrayList<T>()
-    for (item in this) {
-        if (condition(item)) {
-            list.add(item)
-        }
-    }
-    return list
-}
-
 fun <T> Fragment.collectOnLifecycle(flow: Flow<T>, collect: suspend (T) -> Unit): Job {
     return viewLifecycleOwner.lifecycleScope.launch {
         repeatOnLifecycle(Lifecycle.State.STARTED) {

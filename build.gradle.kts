@@ -5,6 +5,8 @@ buildscript {
         set("roomVersion", "2.4.0-rc01")
         set("daggerVersion", "2.39.1")
         set("dataStoreVersion", "1.0.0-alpha02")
+        set("jUnitVersion", "4.13.2")
+        set("androidTestExtension", "1.1.3")
     }
 
     val kotlinVersion: String by extra

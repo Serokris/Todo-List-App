@@ -13,7 +13,6 @@ class TodoInteractor @Inject constructor(private val todoRepository: TodoReposit
         if (todo.description.isBlank()) {
             throw InvalidTodoException("The todo description should not be empty!")
         }
-
         todoRepository.insert(todo)
     }
 
@@ -21,7 +20,6 @@ class TodoInteractor @Inject constructor(private val todoRepository: TodoReposit
         if (todo.description.isBlank()) {
             throw InvalidTodoException("The todo description should not be empty!")
         }
-
         todoRepository.update(todo)
     }
 

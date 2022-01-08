@@ -5,6 +5,7 @@ import com.example.domain.models.Todo
 import kotlinx.coroutines.flow.Flow
 
 interface TodoRepository {
+
     suspend fun insert(todo: Todo)
 
     suspend fun update(todo: Todo)
