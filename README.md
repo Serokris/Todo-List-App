@@ -1,4 +1,4 @@
-# __MVVM Todo List App__
+# __Todo List App__
 
 This is a to-do list app that I developed as a home project for the Android operating system. In
 this app, you can create todo, mark them as done, sort them, delete them, and so on. The foundation
