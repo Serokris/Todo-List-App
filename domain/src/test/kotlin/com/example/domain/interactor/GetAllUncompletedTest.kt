@@ -26,7 +26,7 @@ class GetAllUncompletedTest {
     }
 
     @Test
-    fun getAllUncompletedTodoList() = runBlocking {
+    fun `Should be return uncompleted todo list from the repository`() = runBlocking {
         Mockito.`when`(fakeTodoRepository.getAllUncompleted()).thenReturn(
             flow { emit(allUncompletedTodoList) }
         )

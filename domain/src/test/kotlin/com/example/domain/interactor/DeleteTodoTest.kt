@@ -16,7 +16,7 @@ class DeleteTodoTest {
     private val todo = Todo(0, "Description", false)
 
     @Test
-    fun deleteTodo() = runBlocking {
+    fun `Should be called method 'delete' at the repository`() = runBlocking {
         todoInteractor.delete(todo)
         verify(fakeTodoRepository).delete(todo)
     }

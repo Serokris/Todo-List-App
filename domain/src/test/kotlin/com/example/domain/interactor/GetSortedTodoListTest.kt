@@ -43,7 +43,7 @@ class GetSortedTodoListTest {
         }
 
     @Test
-    fun `Expected todo list of one item "Todo A" sorted by name, because search query is "a"`() =
+    fun `Expected todo list of one item 'Todo A' sorted by name, because search query is 'a'`() =
         runBlocking {
             val searchQuery = "a"
             Mockito.`when`(fakeTodoRepository.getSortedTodoList(searchQuery, SortOrder.BY_NAME))
@@ -62,7 +62,7 @@ class GetSortedTodoListTest {
         }
 
     @Test
-    fun `Expected full todo list sorted by name, because search query is "Todo"`() =
+    fun `Expected full todo list sorted by name, because search query is 'Todo'`() =
         runBlocking {
             val searchQuery = "Todo"
             Mockito.`when`(fakeTodoRepository.getSortedTodoList(searchQuery, SortOrder.BY_NAME))
@@ -103,7 +103,7 @@ class GetSortedTodoListTest {
     }
 
     @Test
-    fun `Expected todo list of one item "Todo B" sorted by date, because search query is "b"`() =
+    fun `Expected todo list of one item 'Todo B' sorted by date, because search query is 'b'`() =
         runBlocking {
             val searchQuery = "b"
             Mockito.`when`(fakeTodoRepository.getSortedTodoList(searchQuery, SortOrder.BY_DATE))
@@ -122,7 +122,7 @@ class GetSortedTodoListTest {
         }
 
     @Test
-    fun `Expected full todo list sorted by date, because search query is "Todo"`() = runBlocking {
+    fun `Expected full todo list sorted by date, because search query is 'Todo'`() = runBlocking {
         val searchQuery = "Todo"
         Mockito.`when`(fakeTodoRepository.getSortedTodoList(searchQuery, SortOrder.BY_DATE))
             .thenReturn(

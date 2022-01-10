@@ -12,7 +12,7 @@ class DeleteAllCompletedTest {
     private val todoInteractor = TodoInteractor(fakeTodoRepository)
 
     @Test
-    fun deleteAllCompleted() = runBlocking {
+    fun `Should be called method 'deleteAllCompleted' at the repository`() = runBlocking {
         todoInteractor.deleteAllCompleted()
         verify(fakeTodoRepository).deleteAllCompleted()
     }

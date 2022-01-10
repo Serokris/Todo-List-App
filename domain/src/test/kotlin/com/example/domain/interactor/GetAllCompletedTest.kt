@@ -26,7 +26,7 @@ class GetAllCompletedTest {
     }
 
     @Test
-    fun getAllCompletedTodoList() = runBlocking {
+    fun `Should be return completed todo list from the repository`() = runBlocking {
         Mockito.`when`(fakeTodoRepository.getAllCompleted()).thenReturn(
             flow { emit(allCompletedTodoList) }
         )

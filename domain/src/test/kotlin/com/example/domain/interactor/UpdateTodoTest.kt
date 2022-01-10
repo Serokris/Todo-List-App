@@ -15,7 +15,7 @@ class UpdateTodoTest {
     private val todo = Todo(0, "Description", false)
 
     @Test
-    fun `Update todo, correct case`() = runBlocking {
+    fun `Update todo, should be called method 'update' at the repository`() = runBlocking {
         val newDescription = "New Description"
         todoInteractor.update(todo.copy(description = newDescription))
         verify(fakeTodoRepository).update(todo.copy(description = newDescription))
