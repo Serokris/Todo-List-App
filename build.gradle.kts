@@ -6,7 +6,7 @@ buildscript {
         set("daggerVersion", "2.39.1")
         set("dataStoreVersion", "1.0.0-alpha02")
         set("jUnitVersion", "4.13.2")
-        set("androidTestExtension", "1.1.3")
+        set("androidTestExtensionVersion", "1.1.3")
     }
 
     val kotlinVersion: String by extra

@@ -36,14 +36,14 @@ val daggerVersion: String by rootProject.extra
 val roomVersion: String by rootProject.extra
 val dataStoreVersion: String by rootProject.extra
 val jUnitVersion: String by rootProject.extra
-val androidTestExtension: String by rootProject.extra
+val androidTestExtensionVersion: String by rootProject.extra
 
 dependencies {
     implementation(project(":domain"))
 
     // Testing
     testImplementation("junit:junit:$jUnitVersion")
-    androidTestImplementation("androidx.test.ext:junit:$androidTestExtension")
+    androidTestImplementation("androidx.test.ext:junit:$androidTestExtensionVersion")
 
     // Hilt
     implementation("com.google.dagger:hilt-android:$daggerVersion")

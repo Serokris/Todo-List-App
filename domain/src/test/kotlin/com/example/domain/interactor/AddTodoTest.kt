@@ -14,7 +14,7 @@ class AddTodoTest {
     private val todoInteractor = TodoInteractor(fakeTodoRepository)
 
     @Test
-    fun `Add todo, should be called method 'add' at the repository`() = runBlocking {
+    fun `Add todo, should be called method 'insert' at the repository`() = runBlocking {
         val todo = Todo(0, "Description", false)
         todoInteractor.add(todo)
         verify(fakeTodoRepository).insert(todo)
